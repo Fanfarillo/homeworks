@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "9116c675-2eb6-4e88-95d9-fd62ccb1b5bd",
+		"name": "DemoEndpointSpring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4281376"
+	},
+	"item": [
+		{
+			"name": "Cani",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Un altro cane\",\n    \"padrone\": { \"id\": 1}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/cane/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cane",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cani per nome",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/cane/search?nomeCane=Bobby3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cane",
+						"search"
+					],
+					"query": [
+						{
+							"key": "nomeCane",
+							"value": "Bobby3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cani per id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/cane/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cane",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cani per id padrone",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/cane/padrone/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cane",
+						"padrone",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Genera dati",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/cane/generate/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cane",
+						"generate",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

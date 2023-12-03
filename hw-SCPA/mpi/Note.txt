@@ -1,0 +1,5 @@
+1) Array-sum: è strano avere un puntatore a intero all'interno della struct mentre il corrispettivo tipo di dato MPI contiene un array di interi.
+2) Scalar-prod: sizes[p], displs[p] non sono proprio puliti: soprattutto quando la dimensione degli array è data da una variabile, è meglio utilizzare malloc().
+3) Scalar-prod: l'inizializzazione ranomica delle strutture dati di input ha senso farla in maniera distribuita, meglio se con dei generatori random paralleli.
+4) Fare sempre la duplicazione di MPI_COMM_WORLD subito dopo MPI_Init() [MPI_Comm_dup()].
+5) Ha più senso lavorare con float e double piuttosto che con interi.
