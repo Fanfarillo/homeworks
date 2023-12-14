@@ -72,12 +72,12 @@ int main(int argc, char** argv) {
   float* d_x = 0;
   float* d_y = 0;
 
-  cudaMalloc((void **)&d_x, N*sizeof(float));
-  cudaMalloc((void **)&d_y, N*sizeof(float));
+  checkCudaErrors(cudaMalloc((void **)&d_x, N*sizeof(float)));
+  checkCudaErrors(cudaMalloc((void **)&d_y, N*sizeof(float)));
 
   // FANFA: Copy vectors from the host (CPU) to the device (GPU).
-  cudaMemcpy(d_x, h_x, N*sizeof(float), cudaMemcpyHostToDevice);
-  cudaMemcpy(d_y, h_y, N*sizeof(float), cudaMemcpyHostToDevice);
+  checkCudaErrors(cudaMemcpy(d_x, h_x, N*sizeof(float), cudaMemcpyHostToDevice));
+  checkCudaErrors(cudaMemcpy(d_y, h_y, N*sizeof(float), cudaMemcpyHostToDevice));
 
 // --------------------- Calculations for CPU implementation ---------------- //
 
@@ -124,7 +124,7 @@ int main(int argc, char** argv) {
   std::cout << "GPU time: " << timer->getTime() << " ms." << std::endl;
 
   // FANFA: Download the resulting vector d_y from the device and store it in h_x.
-  cudaMemcpy(h_x, d_y, N*sizeof(float), cudaMemcpyDeviceToHost);
+  checkCudaErrors(cudaMemcpy(h_x, d_y, N*sizeof(float), cudaMemcpyDeviceToHost));
 
   // cudaMemcpy is synchronous, i.e. it will wait for any computation on the GPU to
   // complete before any data is copied (as if cudaDeviceSynchronize() was called before).

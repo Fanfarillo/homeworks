@@ -89,14 +89,14 @@ int main(int argc, char** argv) {
   // FANFA: Allocate global memory on the GPU.
   float *d_A, *d_B, *d_C;
 
-  cudaMalloc((void **)&d_A, ROWS*COLS*sizeof(float));
-  cudaMalloc((void **)&d_B, ROWS*COLS*sizeof(float));
-  cudaMalloc((void **)&d_C, ROWS*COLS*sizeof(float));
+  checkCudaErrors(cudaMalloc((void **)&d_A, ROWS*COLS*sizeof(float)));
+  checkCudaErrors(cudaMalloc((void **)&d_B, ROWS*COLS*sizeof(float)));
+  checkCudaErrors(cudaMalloc((void **)&d_C, ROWS*COLS*sizeof(float)));
 
   // FANFA: Copy matrices from the host (CPU) to the device (GPU).
-  cudaMemcpy(d_A, h_A, ROWS*COLS*sizeof(float), cudaMemcpyHostToDevice);
-  cudaMemcpy(d_B, h_B, ROWS*COLS*sizeof(float), cudaMemcpyHostToDevice);
-  cudaMemcpy(d_C, h_C, ROWS*COLS*sizeof(float), cudaMemcpyHostToDevice);
+  checkCudaErrors(cudaMemcpy(d_A, h_A, ROWS*COLS*sizeof(float), cudaMemcpyHostToDevice));
+  checkCudaErrors(cudaMemcpy(d_B, h_B, ROWS*COLS*sizeof(float), cudaMemcpyHostToDevice));
+  checkCudaErrors(cudaMemcpy(d_C, h_C, ROWS*COLS*sizeof(float), cudaMemcpyHostToDevice));
 
 // ------------------------ Calculations on the CPU ------------------------- //
 
@@ -124,7 +124,7 @@ int main(int argc, char** argv) {
   std::cout << "GPU time: " << timer->getTime() << " ms." << std::endl;
 
   // FANFA: Download the resulting matrix d_C from the device and store it in h_A.
-  cudaMemcpy(h_A, d_C, ROWS*COLS*sizeof(float), cudaMemcpyDeviceToHost);
+  checkCudaErrors(cudaMemcpy(h_A, d_C, ROWS*COLS*sizeof(float), cudaMemcpyDeviceToHost));
 
   // Now let's check if the results are the same.
   float diff = 0.0f;
