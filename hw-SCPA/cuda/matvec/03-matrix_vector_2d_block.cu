@@ -53,7 +53,7 @@ __global__ void gpuMatrixVector(int rows, int cols, const float* A,
 
   int row = tid_y + block_row * blockDim.y; //col = tid_x
   int stop = tid_x + cols;
-  if(row >= rows || col >= cols || entry >= rows*cols) return;
+  if(row >= rows || tid_x >= cols) return;
 
   extern __shared__ float aux[][];  //shared memory
   aux[tid_x][tid_y] = 0.0;
