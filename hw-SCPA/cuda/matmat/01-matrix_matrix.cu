@@ -31,9 +31,35 @@ void cpuMatrixProduct(int m, int k, int n, const float *A, const float *B, float
 
 
 
-//TODO: GPU implementation of matrix-matrix product
+//GPU implementation of matrix-matrix product
+//In this version, we use a block of threads for each block of rows of matrix C (and of matrix A) --> all threads work on entire matrix B.
 __global__ void gpuMatrixProduct(int m, int k, int n, const float *A, const float *B, float *C) {
-    return;
+    //auxiiary variables
+    int index_k;    //index_k is a pure loop index.
+    int tid_x = threadIdx.x;
+    int tid_y = threadIdx.y;
+    int row = tid_y + blockIdx.x * blockDim.y;
+    int stop = tid_x + n;   //n = num columns of matrix C
+    if(row >= m || tid_x >= n)  return; //case in which thread indexes exceed matrix C dimensions
+
+    //use of shared memory
+    /*
+    __shared__ float aux[][];
+    aux[tid_y][tid_x] = 0.0;
+    */
+
+    //matrix matrix product
+    for(; tid_x<stop; tid_x += blockDim.x) {
+        for(index_k=0; index_k<k; index_k++) {
+            //aux[tid_y][tid_x] += A[index_k+row*k] * B[tid_x+index_k*n];
+            C[tid_x+row*n] += A[index_k+row*k] * B[tid_x+index_k*n];
+
+        }
+
+    }
+
+    //reduction + write result to global memory only if we use shared memory
+    //TODO: I am pretty sure we can find a more complicated approach.
 
 }
 
